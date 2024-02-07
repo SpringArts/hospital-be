@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('superadmins', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('is_active')->default(true);
-            $table->enum('role', ['guest', 'normal', 'admin', 'doctor'])->default('guest');
-            $table->string('provider_id')->nullable();
-            $table->string('provider_name')->nullable();
-            $table->rememberToken();
+            $table->string('otp');
+            $table->dateTime('otp_expire_time')->default(now()->addHour());
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('superadmins');
     }
 };
