@@ -5,8 +5,12 @@ namespace App\Usecases\Auth;
 
 
 use App\helper\ResponseHelper;
+use App\Http\Resources\Auth\UserResource;
 use App\Mail\VerifyEmail;
 use App\Models\User;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
@@ -16,15 +20,25 @@ class RegisterAction
 {
     public function __invoke(array $formData)
     {
-        $user = User::create([
-            'name' => $formData['name'],
-            'email' => $formData['email'],
-            'password' => $formData['password'],
-            'email_verification_token' => Str::uuid()->toString()
-        ]);
+        try {
+            //call login action
 
-        Mail::to($user->email)->queue(new VerifyEmail($user));
+            //adding user data to the database
+            $user = new User();
+            $user->name = $formData['name'];
+            $user->email = $formData['email'];
+            $user->password = Hash::make($formData['password']);
 
-        return ResponseHelper::success('Please check your email to activate your account.', $user)
+            //generate email_verification_token to validate user email
+            $user->email_verification_token = Str::uuid()->toString();
+            $user->save();
+
+            Mail::to($user->email)->send(new VerifyEmail($user));
+
+            return ResponseHelper::success('Please check your email to activate your account.', new UserResource($user) , Response::HTTP_OK);
+
+        } catch (\Throwable $th){ //if the error is happening
+            return ResponseHelper::fail($th->getMessage(),  500);
+        }
     }
 }
