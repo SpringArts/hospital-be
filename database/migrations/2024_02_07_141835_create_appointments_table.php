@@ -18,6 +18,7 @@ return new class extends Migration
             $table->dateTime('time');
             $table->text('note');
             $table->string('ticket');
+            $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });
     }
