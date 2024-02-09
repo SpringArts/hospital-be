@@ -10,9 +10,4 @@ use Illuminate\Support\Facades\Auth;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
-
-    public function okpar()
-    {
-        return Auth::user();
-    }
 }
