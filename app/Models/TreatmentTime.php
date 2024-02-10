@@ -29,8 +29,11 @@ class TreatmentTime extends Model
 
         $days = [];
 
-        foreach ($this->date as $day){
-            if(isset($dayMapping[$day])){
+        // Decode JSON string to array if necessary
+        $dateArray = is_string($this->date) ? json_decode($this->date, true) : $this->date;
+
+        foreach ($dateArray as $day) {
+            if (isset($dayMapping[$day])) {
                 $days[] = $dayMapping[$day];
             }
         }
