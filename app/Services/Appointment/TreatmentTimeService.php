@@ -35,7 +35,8 @@ class TreatmentTimeService
             $formData['user_id'] = $user->id;
 
             while ($start_at <= $end_at) {
-                $formData['date'] = $data['date'];
+                // Convert date array to JSON string
+                $formData['date'] = json_encode($data['date']);
                 $formData['time'] = $start_at->format('H:i');
 
                 $treatment = TreatmentTime::create($formData);
@@ -60,3 +61,4 @@ class TreatmentTimeService
         }
     }
 }
+

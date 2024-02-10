@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\App\TreatmentTimeApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class , 'login']);
 Route::post('/password/email',  [ResetPasswordController::class, 'sendEmail']);
 Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
+
+Route::middleware('auth:sanctum')->group(function (){
+    Route::apiResource('/treatment-times', TreatmentTimeApiController::class);
+});

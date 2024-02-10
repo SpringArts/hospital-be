@@ -24,14 +24,14 @@ class TreatmentTimeRequest extends FormRequest
     {
         $rules = [
             'date.*' => ['required', new TreatmentDateRule()],
-            'start_at' => 'required|time',
-            'end_at' => 'required|time|after:start_at'
+            'start_at' => 'required|date_format:H:i',
+            'end_at' => 'required|date_format:H:i|after:start_at'
         ];
 
         if ($this->isMethod("PUT") || $this->isMethod("PATCH")) {
             $rules['date.*'] = ['nullable', new TreatmentDateRule()];
-            $rules['start_at'] = 'nullable|time';
-            $rules['end_at'] = 'nullable|time|after:start_at';
+            $rules['start_at'] = 'nullable|date_format:H:i';
+            $rules['end_at'] = 'nullable|date_format:H:i|after:start_at';
         }
 
         return $rules;

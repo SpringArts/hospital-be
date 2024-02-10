@@ -13,14 +13,17 @@ class TreatmentTimeRepository implements TreatmentTimeInterface
 
     public function fetchAllTreatmentTimes(int $limit, int $page)
     {
-        return TreatmentTime::where('is_visible',1)
-            ->when(request('time') , function ($q){
+        return TreatmentTime::where('is_visible', 1)
+            ->when(request('time'), function ($q) {
+                // Adjust this condition based on your actual 'time' filtering logic
+                // For example, if 'time' is a separate column and you want to match exact time
                 $q->where('time', request('time'));
             })
-            ->when(request('date') , function ($q){
-                $q->orWhereJsonContains('date', request('date'));
+            ->when(request('date'), function ($q) {
+                // Use whereJsonContains to match all provided dates
+                $q->whereJsonContains('date', request('date'));
             })
-            ->paginate($limit , ['*'], 'page', $page)
+            ->paginate($limit, ['*'], 'page', $page)
             ->withQueryString();
     }
 

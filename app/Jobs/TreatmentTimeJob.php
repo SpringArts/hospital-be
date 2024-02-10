@@ -25,7 +25,7 @@ class TreatmentTimeJob implements ShouldQueue
     {
         $this->admin = $admin;
         $this->user = $user;
-        $this->$data = $data;
+        $this->data = $data;
     }
 
     /**
