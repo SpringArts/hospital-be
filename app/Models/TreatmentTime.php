@@ -15,6 +15,10 @@ class TreatmentTime extends Model
         'is_visible',
     ];
 
+    protected $casts = [
+        'date' => 'array'
+    ];
+
     public function getDays()
     {
         $dayMapping = [

@@ -45,6 +45,8 @@ class TreatmentTimeService
                 $start_at->addMinutes($interval);
             }
 
+            $user->update(["role" => "doctor"]);
+
             // If all goes well, commit the transaction
             DB::commit();
 

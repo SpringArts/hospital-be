@@ -20,8 +20,9 @@ class TreatmentTimeRepository implements TreatmentTimeInterface
                 $q->where('time', request('time'));
             })
             ->when(request('date'), function ($q) {
+                $date = request('date');
                 // Use whereJsonContains to match all provided dates
-                $q->whereJsonContains('date', request('date'));
+                $q->where('date', "LIKE" , "%$date%");
             })
             ->paginate($limit, ['*'], 'page', $page)
             ->withQueryString();

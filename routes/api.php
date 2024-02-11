@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\App\TreatmentTimeApiController;
+use App\Http\Controllers\Api\App\AppointmentApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,5 @@ Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::apiResource('/treatment-times', TreatmentTimeApiController::class);
+    Route::apiResource('/appointments', AppointmentApiController::class);
 });
