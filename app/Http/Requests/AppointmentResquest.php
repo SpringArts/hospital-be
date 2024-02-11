@@ -23,10 +23,18 @@ class AppointmentResquest extends FormRequest
     {
         $rules = [
             'doctor_id' => 'required|integer|exists:users,id',
-            ''
-        ]
-        return [
-            //
+            'time' => 'required|date|after:today',
+            'note' => 'required|string',
+            'type' => 'nullable|in:inPerson,liveChat,videoChat',
+            'status' => 'nullable|in:ongoing,pending,cancel,complete'
         ];
+
+        if ($this->isMethod("PUT") || $this->isMethod("PATCH")){
+            $rules['doctor_id'] = 'nullable|integer|exists:users,id';
+            $rules['time'] = 'nullable|date';
+            $rules['note'] = 'nullable|string';
+        }
+
+        return $rules;
     }
 }
