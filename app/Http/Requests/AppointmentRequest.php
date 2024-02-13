@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AppointmentResquest extends FormRequest
+class AppointmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class AppointmentResquest extends FormRequest
             'status' => 'nullable|in:ongoing,pending,cancel,complete'
         ];
 
-        if ($this->isMethod("PUT") || $this->isMethod("PATCH")){
+        if ($this->isMethod("PUT") || $this->isMethod("PATCH")) {
             $rules['doctor_id'] = 'nullable|integer|exists:users,id';
             $rules['time'] = 'nullable|date';
             $rules['note'] = 'nullable|string';

@@ -3,8 +3,8 @@
 
 namespace App\Usecases\Auth;
 
-
-use App\helper\ResponseHelper;
+use App\Enums\UserRole;
+use App\Helpers\ResponseHelper;
 use App\Http\Resources\Auth\UserResource;
 use App\Mail\VerifyEmail;
 use App\Models\User;
@@ -15,20 +15,16 @@ use Illuminate\Support\Facades\Mail;
 
 class LoginAction
 {
-    const ADMIN_TOKEN  = 'adminToken';
-    const EDITOR_TOKEN  = 'editorToken';
-    const NORMAL_USER_TOKEN = 'normalToken';
-
-    const ROlE_ADMIN = "admin";
-    const ROLE_USER = "user";
-    const ROLE_EDITOR = "editor";
+    const ADMIN_TOKEN  = UserRole::ADMIN;
+    const EDITOR_TOKEN  = UserRole::EDITOR;
+    const NORMAL_USER_TOKEN = UserRole::USER;
 
     public function __invoke(Request $request)
     {
         try {
-            if(Auth::attempt($request->only('email','password'))){
+            if (Auth::attempt($request->only('email', 'password'))) {
                 $user = Auth::user();
-                if (!$user->is_active){
+                if (!$user->is_active) {
                     $id = Auth::id();
                     $unActiveUser = User::where('id', $id)->first();
                     Mail::to($unActiveUser->email)->send(new VerifyEmail($unActiveUser));
@@ -41,7 +37,7 @@ class LoginAction
                 return $this->generateSuccessResponse($token, $user);
             }
             return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-        }catch (\Throwable $th){
+        } catch (\Throwable $th) {
             return ResponseHelper::fail($th->getMessage(),  500);
         }
     }
@@ -53,11 +49,11 @@ class LoginAction
 
     protected function generateToken($user)
     {
-        return $user->createToken($user->role === self::ROlE_ADMIN ? self::ADMIN_TOKEN : self::NORMAL_USER_TOKEN)->plainTextToken;
+        return $user->createToken($user->role === UserRole::ADMIN ? self::ADMIN_TOKEN : self::NORMAL_USER_TOKEN)->plainTextToken;
     }
     protected function generateSuccessResponse($token, $user)
     {
-        if ($user->role === self::ROlE_ADMIN) {
+        if ($user->role ===  UserRole::ADMIN) {
             return response()->json([
                 'access_token' => $token,
                 'token_type' => self::ADMIN_TOKEN,
