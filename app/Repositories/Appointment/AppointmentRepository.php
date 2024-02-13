@@ -42,7 +42,7 @@ class AppointmentRepository implements AppointmentInterface
 
     public function store(array $data)
     {
-        return RegisterAppointmentJob::dispatch(auth()->user() ,$data);
+        return RegisterAppointmentJob::dispatch(auth()->user() ,$data); //ToFix
     }
 
     public function update(array $data, Appointment $appointment)

@@ -4,7 +4,7 @@
 namespace App\Usecases\Auth;
 
 
-use App\helper\ResponseHelper;
+use App\Helpers\ResponseHelper;
 use Illuminate\Http\Response;
 
 class LogoutAction
@@ -13,6 +13,6 @@ class LogoutAction
     {
         $user = auth()->user();
         $user->tokens()->delete();
-        return ResponseHelper::success("Successfully logout", null , Response::HTTP_OK);
+        return ResponseHelper::success("Successfully logout", null, Response::HTTP_OK);
     }
 }

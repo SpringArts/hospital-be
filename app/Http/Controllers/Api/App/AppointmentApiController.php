@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\App;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AppointmentResquest;
+use App\Http\Requests\AppointmentRequest;
 use App\Models\Appointment;
 use App\Usecases\App\Appointment\AppointmentAction;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class AppointmentApiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AppointmentResquest $request)
+    public function store(AppointmentRequest $request)
     {
         return $this->appointmentAction->store($request->all());
     }

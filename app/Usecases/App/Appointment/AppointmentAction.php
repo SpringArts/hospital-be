@@ -4,7 +4,7 @@
 namespace App\Usecases\App\Appointment;
 
 
-use App\helper\ResponseHelper;
+use App\Helpers\ResponseHelper;
 use App\Http\Resources\AppointmentResource;
 use App\Interfaces\Appointment\AppointmentInterface;
 use App\Models\Appointment;
@@ -24,7 +24,7 @@ class AppointmentAction
     {
         $limit = request()->limit ?? 10;
         $page = request()->page ?? 1;
-        $data = $this->appointmentRepository->fetchAllAppointments($limit , $page);
+        $data = $this->appointmentRepository->fetchAllAppointments($limit, $page);
 
         return response()->json([
             "message" => "successfully fetched",
@@ -35,25 +35,24 @@ class AppointmentAction
 
     public function fetchAppointment(Appointment $appointment)
     {
-        return ResponseHelper::success("Successfully Fetched" , new AppointmentResource($appointment), Response::HTTP_OK);
+        return ResponseHelper::success("Successfully Fetched", new AppointmentResource($appointment), Response::HTTP_OK);
     }
 
     public function store($data)
     {
         $this->appointmentRepository->store($data);
-        return ResponseHelper::success('Wait for a moment', null , Response::HTTP_CREATED);
+        return ResponseHelper::success('Wait for a moment', null, Response::HTTP_CREATED);
     }
 
-    public function update(array $data , Appointment $appointment)
+    public function update(array $data, Appointment $appointment)
     {
-        $this->appointmentRepository->update($data , $appointment);
-        return ResponseHelper::success('Successfully Updated', null , Response::HTTP_OK);
+        $this->appointmentRepository->update($data, $appointment);
+        return ResponseHelper::success('Successfully Updated', null, Response::HTTP_OK);
     }
 
     public function delete(Appointment $appointment)
     {
         $this->appointmentRepository->delete($appointment);
-        return ResponseHelper::success('Successfully Deleted', null , Response::HTTP_NO_CONTENT);
+        return ResponseHelper::success('Successfully Deleted', null, Response::HTTP_NO_CONTENT);
     }
-
 }

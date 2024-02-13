@@ -36,7 +36,7 @@ class TreatmentTimeRepository implements TreatmentTimeInterface
     public function store(array $data)
     {
         $admin = User::where('role', 'admin')->get();
-        return TreatmentTimeJob::dispatch($admin , auth()->user() , $data);
+        return TreatmentTimeJob::dispatch($admin , auth()->user() , $data);//ToFix , should be separate in service
     }
 
     public function update(array $data, TreatmentTime $treatmentTime)

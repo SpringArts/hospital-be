@@ -4,7 +4,7 @@
 namespace App\Usecases\Auth;
 
 
-use App\helper\ResponseHelper;
+use App\Helpers\ResponseHelper;
 use App\Http\Resources\Auth\UserResource;
 use App\Mail\VerifyEmail;
 use App\Models\User;
@@ -35,9 +35,8 @@ class RegisterAction
 
             Mail::to($user->email)->send(new VerifyEmail($user));
 
-            return ResponseHelper::success('Please check your email to activate your account.', new UserResource($user) , Response::HTTP_OK);
-
-        } catch (\Throwable $th){ //if the error is happening
+            return ResponseHelper::success('Please check your email to activate your account.', new UserResource($user), Response::HTTP_OK);
+        } catch (\Throwable $th) { //if the error is happening
             return ResponseHelper::fail($th->getMessage(),  500);
         }
     }

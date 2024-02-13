@@ -1,7 +1,8 @@
 <?php
+
 namespace App\Services\Appointment;
 
-use App\helper\ResponseHelper;
+use App\Helpers\ResponseHelper;
 use App\Models\TreatmentTime;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
@@ -63,4 +64,3 @@ class TreatmentTimeService
         }
     }
 }
-
