@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\App\TreatmentTimeApiController;
 use App\Http\Controllers\Api\App\AppointmentApiController;
+use App\Http\Controllers\Api\App\User\UserLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class , 'login']);
+Route::apiResource('/user-logs', UserLogController::class);
 Route::post('/password/email',  [ResetPasswordController::class, 'sendEmail']);
 Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
 
